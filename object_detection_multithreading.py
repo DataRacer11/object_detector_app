@@ -1,10 +1,10 @@
+#!/usr/bin/env python
+
 import os
 import cv2
 import time
 import argparse
 import numpy as np
-import subprocess as sp
-import json
 import tensorflow as tf
 
 from queue import Queue
@@ -86,12 +86,12 @@ def worker(input_q, output_q):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('-strin', '--stream-input', dest="stream_in", action='store', type=str, default=None)
-    parser.add_argument('-src', '--source', dest='video_source', type=int,
-                        default=0, help='Device index of the camera.')
+    parser.add_argument('-src', '--source', dest='video_source', type=str,
+                        default=os.environ.get("VIDEO_SOURCE"), help='Device index of the camera.')
     parser.add_argument('-wd', '--width', dest='width', type=int,
-                        default=640, help='Width of the frames in the video stream.')
+                        default=os.environ.get("VIDEO_WIDTH", 640), help='Width of the frames in the video stream.')
     parser.add_argument('-ht', '--height', dest='height', type=int,
-                        default=480, help='Height of the frames in the video stream.')
+                        default=os.environ.get("VIDEO_HEIGHT", 480), help='Height of the frames in the video stream.')
     parser.add_argument('-strout','--stream-output', dest="stream_out", help='The URL to send the livestreamed object detection to.')
     args = parser.parse_args()
 
